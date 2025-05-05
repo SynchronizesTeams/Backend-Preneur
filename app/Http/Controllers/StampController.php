@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 class StampController extends Controller
 {
     public function seeStamp($siswa_id) {
+        $stamp = Stamp::where('siswa_id', '=', $siswa_id)->select('company_stamp')->get();
 
 
         return response();
