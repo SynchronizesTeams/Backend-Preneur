@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\StudentProfile;
 use App\Models\CompanyProfile;
-use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
@@ -100,7 +100,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name_company' => 'required|string|max:255',
-            'logo' => 'required|string',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'password' => 'required|string|min:8',
         ]);
 
@@ -108,10 +108,12 @@ class AuthController extends Controller
 
         DB::transaction(function () use ($request, &$companies) {
             $company_id = uniqid("company_");
+
+            $logo = $request->file('logo')->store('logo', 'public');
             $companies = CompanyProfile::create([
                 'company_id' => $company_id,
                 'name_company' => $request->name_company,
-                'logo' => $request->logo,
+                'logo' => $logo,
                 'password' => $request->password,
             ]);
         });
