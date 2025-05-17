@@ -81,6 +81,7 @@ class AuthController extends Controller
                     "status" => true,
                     "message" => "Hello " . $siswa->nama,
                     "token" => $token,
+                    "data" => $siswa
                 ]
             );
 
