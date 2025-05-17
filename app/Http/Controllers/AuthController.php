@@ -161,8 +161,9 @@ class AuthController extends Controller
                 "message" => "succes login",
                 "status" => true,
                 "token" => $token,
-                "siswa" => [
+                "company" => [
                     "id" => $companies->id,
+                    "company_id" => $companies->company_id,
                     "nama_company" => $companies->nama,
                     "password" => $companies->password,
                     "created_at" => $companies->created_at,
