@@ -21,9 +21,9 @@ class AuthController extends Controller
             'nis' => 'required|integer',
         ]);
 
-        $users = null;
+        //$users = null;
 
-         DB::transaction(function () use ($request, &$users) {
+         $users = DB::transaction(function () use ($request, &$users) {
             $siswa_id = uniqid("siswa_");
             $users = StudentProfile::create([
                 'siswa_id' => $siswa_id,
@@ -104,9 +104,9 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
         ]);
 
-        $companies = null;
+        //$companies = null;
 
-        DB::transaction(function () use ($request, &$companies) {
+        $companies = DB::transaction(function () use ($request, &$companies) {
             $company_id = uniqid("company_");
 
             $logo = $request->file('logo')->store('logo', 'public');
@@ -141,7 +141,7 @@ class AuthController extends Controller
 
 
     public function CompanyLogin(Request $request) {
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(Auth::user()->nama$request->all(), [
             'name_company' => 'required|string|max:255',
             'password' => 'required|string|min:8',
         ]);
@@ -173,9 +173,18 @@ class AuthController extends Controller
             ]
         );
 
+        
+        
+    }
+    public function siswaProfile($siswa_id) {
 
+        $siswa = StudentProfile::where("siswa_id", '=', $siswa_id)->first();
+        return $siswa;
+    }
 
-}
-
+    public function companyProfile($company_id) {
+        $company = CompanyProfile::where("company_id", '=', $company_id)->first();
+        return $company;
+    }
 
 }
