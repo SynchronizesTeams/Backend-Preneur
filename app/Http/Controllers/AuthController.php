@@ -95,15 +95,15 @@ class AuthController extends Controller
 
     public function RegisterCompany(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'name_company' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'password' => 'required|string|min:8',
         ]);
 
-        //$companies = null;
+        $companies = null;
 
-        $companies = DB::transaction(function () use ($request, &$companies) {
+        DB::transaction(function () use ($request, &$companies) {
             $company_id = uniqid("company_");
 
             $logo = $request->file('logo')->store('logo', 'public');
@@ -117,14 +117,9 @@ class AuthController extends Controller
 
         return response()->json(
             [
-                "message" => "succes register company",
+                "message" => "success register company",
                 "status" => true,
-                "company" => [
-                    "company_id" => $companies->company_id,
-                    "name_company" => $companies->nama,
-                    "logo" => $companies->logo,
-                    "password" => $companies->password,
-                ]
+                "company" => $companies->select('company_id', 'name_company', 'logo', 'password')
             ]
         );
 
@@ -161,13 +156,7 @@ class AuthController extends Controller
                 "message" => "succes login",
                 "status" => true,
                 "token" => $token,
-                "company" => [
-                    "id" => $companies->id,
-                    "company_id" => $companies->company_id,
-                    "nama_company" => $companies->nama,
-                    "password" => $companies->password,
-                    "created_at" => $companies->created_at,
-                ]
+                "company" => $companies->select('company_id', 'name_company', 'logo', 'password')
             ]
         );
 
