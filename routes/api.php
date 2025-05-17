@@ -20,4 +20,6 @@ Route::post('/company/login', [AuthController::class, 'CompanyLogin']);
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::post('send/{siswa_id}', [StampController::class, 'sendStamp']);
+    Route::get('/siswa/{siswa_id}', [AuthController::class, 'siswaProfile']);
+    Route::get('/company/{company_id}', [AuthController::class, 'companyProfile']);
 });

@@ -179,12 +179,32 @@ class AuthController extends Controller
     public function siswaProfile($siswa_id) {
 
         $siswa = StudentProfile::where("siswa_id", '=', $siswa_id)->first();
-        return $siswa;
+        if(!$siswa) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Siswa not found',
+            ], 404);
+        } else {
+            return response()->json([
+                'success' => true,
+                'data' => $siswa,
+            ]);
+        }
     }
 
     public function companyProfile($company_id) {
         $company = CompanyProfile::where("company_id", '=', $company_id)->first();
-        return $company;
+        if(!$company) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Company not found',
+            ], 404);
+        } else {
+            return response()->json([
+                'success' => true,
+                'data' => $company,
+            ]);
+        }
     }
 
 }
