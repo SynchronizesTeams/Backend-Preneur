@@ -157,7 +157,7 @@ class AuthController extends Controller
                 "message" => "succes login",
                 "status" => true,
                 "token" => $token,
-                "company" => $companies->select('company_id', 'name_company', 'logo', 'password')
+                "company" => $companies->only('company_id', 'name_company', 'logo', 'password')
             ]
         );
 
