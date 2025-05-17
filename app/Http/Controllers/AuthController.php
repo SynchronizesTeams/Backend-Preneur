@@ -21,9 +21,9 @@ class AuthController extends Controller
             'nis' => 'required|integer',
         ]);
 
-        //$users = null;
-
-         $users = DB::transaction(function () use ($request, &$users) {
+        $users = null;
+        $token = null;
+        DB::transaction(function () use ($request, &$users, &$token) {
             $siswa_id = uniqid("siswa_");
             $users = StudentProfile::create([
                 'siswa_id' => $siswa_id,
@@ -31,18 +31,15 @@ class AuthController extends Controller
                 'nis' => $request->nis,
             ]);
 
-            // $token = $users->createToken('auth_token')->plainTextToken;
+            $token = $users->createToken('auth_token')->plainTextToken;
         });
 
         return response()->json(
             [
                 "message" => "succes register",
                 "status" => true,
-                "siswa" => [
-                    "siswa_id" => $users->siswa_id,
-                    "nama" => $users->nama,
-                    "nis" => $users->nis,
-                ]
+                "siswa" => $users,
+                "token" => $token
             ]
         );
 
@@ -141,7 +138,7 @@ class AuthController extends Controller
 
 
     public function CompanyLogin(Request $request) {
-        $validator = Validator::make(Auth::user()->nama$request->all(), [
+        $validator = Validator::make($request->all(), [
             'name_company' => 'required|string|max:255',
             'password' => 'required|string|min:8',
         ]);
