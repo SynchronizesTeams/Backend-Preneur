@@ -12,9 +12,17 @@ class StampController extends Controller
 {
     public function seeStamp($siswa_id) {
         $stamp = Stamp::where('siswa_id', '=', $siswa_id)->select('company_stamp')->get();
+        if (!$stamp) {
+            return response()->json([
+                "success" => false,
+                "message" => "Stamp not found"
+            ], 404);
+        }
 
-
-        return response();
+        return response()->json([
+            "success" => true,
+            "data" =>  $stamp
+        ]);
     }
 
     public function sendStamp($siswa_id) {

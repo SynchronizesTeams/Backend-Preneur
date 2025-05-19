@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('send/{siswa_id}', [StampController::class, 'sendStamp']);
     Route::get('/siswa/{siswa_id}', [AuthController::class, 'siswaProfile']);
     Route::get('/company/{company_id}', [AuthController::class, 'companyProfile']);
-
+    Route::get('/stamp/{siswa_id}', [StampController::class, 'seeStamp']);
     Route::prefix('/admin')->group(function() {
         Route::podt('/status/{company_id}', [AdminController::class, 'setStatus']);
     });
