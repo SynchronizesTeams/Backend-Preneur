@@ -21,4 +21,14 @@ class AdminController extends Controller
             'status' => $company->status,
         ], 200);
     }
+
+    public function seeAllCompany() {
+        $companies = CompanyProfile::select('company_id', 'name_company')->get();
+        return response()->json([
+            'success' => true,
+            'data' => $companies,
+        ]);
+    }
+
+    
 }

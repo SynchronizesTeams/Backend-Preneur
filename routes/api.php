@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StampController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+
 
 
 Route::get('/user', function (Request $request) {
@@ -22,4 +24,8 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('send/{siswa_id}', [StampController::class, 'sendStamp']);
     Route::get('/siswa/{siswa_id}', [AuthController::class, 'siswaProfile']);
     Route::get('/company/{company_id}', [AuthController::class, 'companyProfile']);
+
+    Route::prefix('/admin')->group(function() {
+        Route::podt('/status/{company_id}', [AdminController::class, 'setStatus']);
+    });
 });
