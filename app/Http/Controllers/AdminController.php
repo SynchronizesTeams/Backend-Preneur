@@ -8,13 +8,22 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function setStatus($company_id, $status) {
+        $booleanStatus = filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+
+         if (!is_bool($booleanStatus)) {
+            return response()->json([
+                'message' => 'Status must be true or false',
+            ], 400);
+         }
+
+
         $company = CompanyProfile::where("company_id", '=', $company_id)->first();
         if (!$company) {
             return response()->json([
                 'message' => 'Company not found',
             ], 404);
         }
-        $company->status = $status;
+        $company->status = $booleanStatus;
         $company->save();
         return response()->json([
             'message' => 'Status company berhasil diubah',
