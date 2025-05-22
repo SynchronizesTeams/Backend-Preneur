@@ -27,5 +27,6 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/stamp/{siswa_id}', [StampController::class, 'seeStamp']);
     Route::prefix('/admin')->group(function() {
         Route::post('/status/{company_id}/{status}', [AdminController::class, 'setStatus']);
+        Route::get('/companies', [AdminController::class, 'seeAllCompany']);
     });
 });

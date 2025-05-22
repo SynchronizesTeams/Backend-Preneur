@@ -146,12 +146,16 @@ class AuthController extends Controller
             ], 422);
         }
 
-        $companies = CompanyProfile::where('name_company', '=', $request->name_company)->where('password', '=', $request->password)->first();
+        $companies = CompanyProfile::where('name_company', '=', $request->name_company)->where('password', '=', $request->password)->where("status", "=", true)->first();
+        if (!$companies) {
+            return response()->json([
+                "message" => "Your account is not active yet"
+            ], 401);
+        } else {
 
-        if ($companies) {
             $token = $companies->createToken("token")->plainTextToken;
         }
-
+        
         return response()->json(
             [
                 "message" => "succes login",

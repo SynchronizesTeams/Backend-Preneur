@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('company_id')->unique();
             $table->string('name_company');
             $table->string('logo');
-            $table->boolean('status');
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
