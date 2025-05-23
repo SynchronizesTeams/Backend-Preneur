@@ -32,7 +32,7 @@ class AdminController extends Controller
     }
 
     public function seeAllCompany() {
-        $companies = CompanyProfile::select('company_id', 'name_company')->get();
+        $companies = CompanyProfile::select('company_id', 'name_company', 'status')->get();
         return response()->json([
             'success' => true,
             'data' => $companies,
