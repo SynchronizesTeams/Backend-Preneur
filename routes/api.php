@@ -19,6 +19,7 @@ Route::post('/register', [AuthController::class, 'RegisterStudent']);
 Route::post('/login', [AuthController::class, 'LoginStudent']);
 Route::post('/company/register', [AuthController::class, 'RegisterCompany']);
 Route::post('/company/login', [AuthController::class, 'CompanyLogin']);
+Route::post('admin/login', [AdminController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::post('send/{siswa_id}', [StampController::class, 'sendStamp']);
