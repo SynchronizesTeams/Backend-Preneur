@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function setStatus($company_id, $status) {
-        $admin = auth()->user()->;
+        $admin = auth()->user();
 
         $booleanStatus = filter_var($status, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
 
@@ -26,7 +26,7 @@ class AdminController extends Controller
                 'message' => 'Company not found',
             ], 404);
         }
-        
+
         $company->status = $booleanStatus;
         $company->save();
         return response()->json([
@@ -59,5 +59,5 @@ class AdminController extends Controller
             'token' => $token
         ]);
 
-    }   
+    }
 }
