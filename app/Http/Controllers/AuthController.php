@@ -136,7 +136,7 @@ class AuthController extends Controller
     public function CompanyLogin(Request $request) {
         $validator = Validator::make($request->all(), [
             'name_company' => 'required|string|max:255',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -155,7 +155,7 @@ class AuthController extends Controller
 
             $token = $companies->createToken("token")->plainTextToken;
         }
-        
+
         return response()->json(
             [
                 "message" => "succes login",
@@ -165,8 +165,8 @@ class AuthController extends Controller
             ]
         );
 
-        
-        
+
+
     }
     public function siswaProfile($siswa_id) {
 
